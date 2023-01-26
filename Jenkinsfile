@@ -12,14 +12,15 @@ pipeline {
         }
         stage ('Build and Push') {
             steps{
+                script{
+                    docker.withRegistry('', 'docker') {
 
-                docker.withRegistry('', 'docker') {
+                        def customImage = docker.build("config-server:${env.BUILD_NUMBER}")
 
-                    def customImage = docker.build("config-server:${env.BUILD_NUMBER}")
-
-                    /* Push the container to the custom Registry */
-                    customImage.push()
-                    customImage.push('latest')
+                        /* Push the container to the custom Registry */
+                        customImage.push()
+                        customImage.push('latest')
+                    }
                 }
             }
         }
