@@ -21,7 +21,7 @@ pipeline {
 
                 sh "docker build . -t config.jar:${env.BUILD_NUMBER}"
                 sh "docker login -u $USERNAME -p $PASSWORD"
-                sh "docker push chanduv33/config-server:config.jar:${env.BUILD_NUMBER} "
+                sh "docker push chanduv33/config-server:${env.BUILD_NUMBER} "
             }
             }
         }
