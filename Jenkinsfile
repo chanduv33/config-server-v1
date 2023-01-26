@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'maven'
+        docker 'docker'
     }
     stages {
         stage('Build') { 
@@ -22,6 +23,15 @@ pipeline {
                 always {
                     junit 'target/surefire-reports/*.xml' 
                 }
+            }
+        }
+        stage ('Build and Push') {
+            withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh '''
+                docker build Dockerfile -t config.jar:$env.BUILD_NUMBER
+                docker login -u $usernameVariable -p $passwordVariable
+                docker push image -t config.jar:$env.BUILD_NUMBER chanduv33/config-server:$env.BUILD_NUMBER
+            '''
             }
         }
     }
