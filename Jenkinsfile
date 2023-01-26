@@ -12,12 +12,14 @@ pipeline {
         }
         stage ('Build and Push') {
             steps{
-                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                sh '''
-                    docker build . -t config.jar:env.BUILD_NUMBER
-                    docker login -u $usernameVariable -p $passwordVariable
-                    docker push image -t config.jar:env.BUILD_NUMBER chanduv33/config-server:env.BUILD_NUMBER
-                '''
+
+                docker.withRegistry('', 'docker') {
+
+                    def customImage = docker.build("config-server:${env.BUILD_NUMBER}")
+
+                    /* Push the container to the custom Registry */
+                    customImage.push()
+                    customImage.push('latest')
                 }
             }
         }
