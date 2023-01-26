@@ -26,5 +26,15 @@ pipeline {
             }
             }
         }
+
+        stage ('Delpoy') {
+            steps {
+                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    sh "docker login -u $USERNAME -p $PASSWORD"
+                    sh "ssh chandrasekharvemugadda@192.168.0.108"
+                    sh "docker pull chanduv33/config-server:${env.BUILD_NUMBER}"
+                }                
+            }
+        }
     }
 }
