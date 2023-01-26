@@ -13,7 +13,7 @@ pipeline {
         stage ('Build and Push') {
             steps{
                 script{
-                    docker.withRegistry('', 'docker') {
+                    dockerTool.withRegistry('', 'docker') {
 
                         def customImage = docker.build("config-server:${env.BUILD_NUMBER}")
 
