@@ -1,4 +1,4 @@
-package com.capgemini.config;
+package com.storesmanagementsystem.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
