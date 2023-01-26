@@ -19,9 +19,10 @@ pipeline {
             steps{
             withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 
-                sh "docker build . -t config.jar:${env.BUILD_NUMBER}"
+                sh "docker build . -t config:${env.BUILD_NUMBER}"
                 sh "docker login -u $USERNAME -p $PASSWORD"
-                sh "docker push chanduv33/config-server:${env.BUILD_NUMBER} "
+                sh "docker tag config:${env.BUILD_NUMBER} chanduv33/config-server:${env.BUILD_NUMBER}"
+                sh "docker push chanduv33/config-server:${env.BUILD_NUMBER}"
             }
             }
         }
