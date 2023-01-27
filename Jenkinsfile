@@ -30,7 +30,7 @@ pipeline {
         stage ('Delpoy') {
             steps {
               script {
-		                sh "ssh chandrasekharvemugadda@192.168.0.108 \"/home/chandrasekharvemugadda/jenkins/publish ${env.BUILD_NUMBER}\" "
+		                sh " ./deploy.sh \"${env.BUILD_NUMBER}\" "
 	            }   
             }           
         }
