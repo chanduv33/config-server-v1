@@ -8,7 +8,7 @@ pipeline {
     environment {
         dockerHome = tool 'docker'
         PATH = "${dockerHome}/bin:$PATH"
-        DOCKER_CREDENTIALS = credentials('docker')
+        
     }
     stages {
         stage('Build') { 
