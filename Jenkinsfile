@@ -32,7 +32,7 @@ pipeline {
               script {
 	                    sh """
 		                    ssh chandrasekharvemugadda@192.168.0.108"
-		                    docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}
+		                    docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW
 		                    docker pull chanduv33/config-server:${env.BUILD_NUMBER}
 		                    docker run -d -p 8089:8089 config:${env.BUILD_NUMBER}
 	                    """
