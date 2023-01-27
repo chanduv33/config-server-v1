@@ -33,7 +33,7 @@ pipeline {
                     sh "ssh chandrasekharvemugadda@192.168.0.108"
                     sh "docker login -u $USERNAME -p $PASSWORD"
                     sh "docker pull chanduv33/config-server:${env.BUILD_NUMBER}"
-                    ssh "docker run -p 8089:8089 config:${env.BUILD_NUMBER}"
+                    sh "docker run -p 8089:8089 config:${env.BUILD_NUMBER}"
                 }                
             }
         }
