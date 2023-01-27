@@ -29,12 +29,14 @@ pipeline {
 
         stage ('Delpoy') {
             steps {
-                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                    sh "ssh chandrasekharvemugadda@192.168.0.108"
-                    sh "docker login -u $USERNAME -p $PASSWORD"
-                    sh "docker pull chanduv33/config-server:${env.BUILD_NUMBER}"
-                    sh "docker run -d -p 8089:8089 config:${env.BUILD_NUMBER}"
-                }                
+              script {
+	                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+	                    sh "ssh chandrasekharvemugadda@192.168.0.108"
+	                    sh "docker login -u $USERNAME -p $PASSWORD"
+	                    sh "docker pull chanduv33/config-server:${env.BUILD_NUMBER}"
+	                    sh "docker run -d -p 8089:8089 config:${env.BUILD_NUMBER}"
+	                }     
+                }           
             }
         }
     }
