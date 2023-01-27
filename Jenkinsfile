@@ -30,7 +30,7 @@ pipeline {
         stage ('Delpoy') {
             steps {
               script {
-		                sh "../jenkins/deploy.sh config:\"${env.BUILD_NUMBER}\""
+		                sh "../jenkins/deploy.sh chanduv33/config-server:\"${env.BUILD_NUMBER}\" config:\"${env.BUILD_NUMBER}\""
 	            }   
             }           
         }
