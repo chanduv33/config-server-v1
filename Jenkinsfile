@@ -18,7 +18,8 @@ pipeline {
         stage ('Build and Push') {
             steps{
             withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-
+				username = $USERNAME
+				password = $PASSWORD
                 sh "docker build . -t config:${env.BUILD_NUMBER}"
                 sh "docker login -u $USERNAME -p $PASSWORD"
                 sh "docker tag config:${env.BUILD_NUMBER} chanduv33/config-server:${env.BUILD_NUMBER}"
@@ -30,14 +31,14 @@ pipeline {
         stage ('Delpoy') {
             steps {
               script {
-	                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+	           
 	                    sh "ssh chandrasekharvemugadda@192.168.0.108"
-	                    sh "docker login -u $USERNAME -p $PASSWORD"
+	                    sh "docker login -u $username -p $password"
 	                    sh "docker pull chanduv33/config-server:${env.BUILD_NUMBER}"
 	                    sh "docker run -d -p 8089:8089 config:${env.BUILD_NUMBER}"
 	                }     
                 }           
-            }
+
         }
     }
 }
