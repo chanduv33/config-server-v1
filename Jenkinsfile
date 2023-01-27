@@ -30,17 +30,9 @@ pipeline {
         stage ('Delpoy') {
             steps {
               script {
-	              		 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-		                    sh """
-			                    ssh chandrasekharvemugadda@192.168.0.108
-			                    docker login -u $USERNAME -p $PASSWORD
-			                    docker pull chanduv33/config-server:${env.BUILD_NUMBER}
-			                    docker run -d -p 8089:8089 config:${env.BUILD_NUMBER}
-		                    """
-		                }  
-	                }   
-                }           
-
+		                sh "ssh chandrasekharvemugadda@192.168.0.108 \"/jenkins/publish ${env.BUILD_NUMBER}\" "
+	            }   
+            }           
         }
     }
 }
