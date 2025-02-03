@@ -19,10 +19,10 @@ pipeline {
         stage ('Build and Push') {
             steps{
             withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                sh "docker build . -t config:${env.BUILD_NUMBER}"
+                sh "docker build . -t config-v1:${env.BUILD_NUMBER}"
                 sh "docker login -u $USERNAME -p $PASSWORD"
-                sh "docker tag config:${env.BUILD_NUMBER} chanduv33/config-server:${env.BUILD_NUMBER}"
-                sh "docker push chanduv33/config-server:${env.BUILD_NUMBER}"
+                sh "docker tag config-v1:${env.BUILD_NUMBER} chanduv33/config-server-v1:${env.BUILD_NUMBER}"
+                sh "docker push chanduv33/config-server-v1:${env.BUILD_NUMBER}"
             }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage ('Delpoy') {
             steps {
               script {
-		                sh "../jenkins/deploy.sh \"${env.BUILD_NUMBER}\" /home/chandrasekharvemugadda/jenkins/config"
+		                sh "../jenkins/deploy.sh \"${env.BUILD_NUMBER}\" /home/vboxuser/Microservices-V1/config-service"
 	            }   
             }           
         }
